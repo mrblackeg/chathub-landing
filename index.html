@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شات هَب | ChatHub - منصة التواصل والأتمتة الشاملة للشركات والمتاجر</title>
+    <meta name="description" content="منصة ChatHub الشاملة لربط جميع قنوات التواصل الاجتماعي، أتمتة الواتساب، والذكاء الاصطناعي وربط متجر سلة في مكان واحد.">
+    
+    <!-- Google Fonts: Cairo & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Pro/Free Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        emerald: {
+                            500: '#10b981',
+                            600: '#059669',
+                        },
+                        salla: '#004956',
+                        sallaAccent: '#00DA90',
+                        darkBg: '#090D16',
+                        darkCard: '#111827',
+                        darkBorder: '#1F2937'
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS for Premium Polish & Glow Effects -->
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #080C14;
+            color: #F3F4F6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Ambient Glows */
+        .glow-bg-primary {
+            background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.18) 0%, rgba(8, 12, 20, 0) 70%);
+        }
+        .glow-bg-emerald {
+            background: radial-gradient(circle at 80% 60%, rgba(16, 185, 129, 0.12) 0%, rgba(8, 12, 20, 0) 60%);
+        }
+        
+        /* Glassmorphism Effect */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.25);
+        }
+
+        /* Glowing Accent Borders */
+        .glow-border {
+            position: relative;
+        }
+        .glow-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.5), transparent, rgba(16,185,129,0.3));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080C14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4F46E5;
+        }
+
+        /* Animated Grid Overlay */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Pulse Animations */
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.02); }
+        }
+        .animate-subtle-pulse {
+            animation: subtlePulse 4s infinite ease-in-out;
+        }
+
+        /* Custom Keyframes for Notifications */
+        @keyframes slideInUp {
+            from { transform: translateY(100%) opacity(0); }
+            to { transform: translateY(0) opacity(1); }
+        }
+        .toast-animate {
+            animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#080C14] text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-[#080C14]/80 border-b border-white/5" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-comments text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight text-white">Chat<span class="text-brand-500">Hub</span></span>
+                    <span class="bg-brand-500/10 border border-brand-500/30 text-brand-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">v2.5 Pro</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+                    <a href="#features" class="hover:text-brand-400 transition-colors">المميزات</a>
+                    <a href="#inbox" class="hover:text-brand-400 transition-colors">الصندوق الموحد</a>
+                    <a href="#ai" class="hover:text-brand-400 transition-colors">مساعد الذكاء الاصطناعي</a>
+                    <a href="#salla" class="hover:text-brand-400 transition-colors flex items-center gap-1.5 text-sallaAccent font-semibold">
+                        <i class="fa-solid fa-bag-shopping"></i> ربط سلة
+                    </a>
+                    <a href="#workflows" class="hover:text-brand-400 transition-colors">الأتمتة والربط</a>
+                    <a href="#pricing" class="hover:text-brand-400 transition-colors">الأسعار</a>
+                    <a href="#faq" class="hover:text-brand-400 transition-colors">الأسئلة الشائعة</a>
+                </nav>
+
+                <!-- Actions / Auth Buttons -->
+                <div class="hidden sm:flex items-center gap-4">
+                    <a href="#demo" class="text-slate-300 hover:text-white px-4 py-2 text-sm font-semibold transition-colors">تسجيل الدخول</a>
+                    <a href="#pricing" class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all flex items-center gap-2 transform active:scale-95">
+                        <span>ابدأ التجربة المجانية</span>
+                        <i class="fa-solid fa-arrow-left text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="lg:hidden text-slate-300 hover:text-white p-2 text-xl focus:outline-none" aria-label="قائمة الموبايل">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#0D1322] border-b border-white/10 px-6 py-6 transition-all duration-300">
+            <div class="flex flex-col gap-4 text-base font-semibold">
+                <a href="#features" class="mobile-link text-slate-300 hover:text-brand-400 py-1">المميزات الرئيسية</a>
+                <a href="#inbox" class="mobile-link text-slate-300 hover:text-brand-400 py-1">الصندوق الموحد</a>
+                <a href="#ai" class="mobile-link text-slate-300 hover:text-brand-400 py-1">الذكاء الاصطناعي</a>
+                <a href="#salla" class="mobile-link text-sallaAccent py-1 flex items-center justify-between">
+                    <span>تكامل سلة Salla</span>
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                </a>
+                <a href="#pricing" class="mobile-link text-slate-300 hover:text-brand-400 py-1">باقات الأسعار</a>
+                <a href="#faq" class="mobile-link text-slate-300 hover:text-brand-400 py-1">الأسئلة الشائعة</a>
+                <hr class="border-white/10 my-2">
+                <div class="flex flex-col gap-3">
+                    <a href="#pricing" class="text-center bg-brand-600 text-white font-bold py-3 rounded-xl shadow-lg">ابدأ التجربة المجانية (14 يوماً)</a>
+                    <a href="login.html" class="text-center text-slate-300 py-2 text-sm">تسجيل الدخول لحسابك</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="relative z-10 pt-20">
+
+        <!-- HERO SECTION -->
+        <section class="relative min-h-[90vh] flex items-center justify-center py-16 overflow-hidden bg-grid-pattern">
+            <!-- Background Glows -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute top-1/3 right-10 w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-4xl mx-auto mb-12">
+                    
+                    <!-- Top Pill Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-brand-500/30 text-slate-300 text-xs sm:text-sm font-medium mb-8 shadow-xl animate-bounce-subtle">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span class="text-emerald-400 font-bold">منصة الأتمتة الأولى 2026</span>
+                        <span class="text-white/30">|</span>
+                        <span>شات هَب يدعم تطبيق PWA للعمل مباشرة من الجوال!</span>
+                    </div>
+
+                    <!-- Main Headline -->
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.15] mb-6">
+                        منصة واحدة تُدير بها جميع <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-brand-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">محادثاتك وأتمتة متجرك</span>
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed mb-10 max-w-3xl mx-auto">
+                        اربط جميع قنواتك (واتساب، انستغرام، تليجرام، ماسنجر) وربط متجر <strong class="text-sallaAccent font-semibold">سلة</strong> في مكان واحد. فعّل ردود الذكاء الاصطناعي الفورية، استرجع السلات المتروكة، وضاعف مبيعاتك بتلقائية كاملة.
+                    </p>
+
+                    <!-- CTAs Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                        <a href="#pricing" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold text-base rounded-2xl shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-[#rocket] text-lg"></i>
+                            <span>ابدأ تجربة مجانية مجاناً (14 يوم)</span>
+                        </a>
+                        <a href="#inbox-preview" class="w-full sm:w-auto px-8 py-4 glass-panel hover:bg-white/10 text-white font-bold text-base rounded-2xl transition-all border border-white/10 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-play text-brand-400 text-sm"></i>
+                            <span>شاهد العرض التفاعلي</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Stats Ribbon -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-white/10 text-right">
+                        <div class="p-3">
+                            <div class="text-2xl sm:text-3xl font-black text-white font-mono" id="stat-messages">+10M</div>
+                            <div class="text-xs text-slate-400 mt-1">رسالة مؤتمتة شهرياً</div>
+                        </div>
+                        <div class="p-3">
+                            <div class="text-2xl sm:text-3xl font-black text-emerald-400 font-mono" id="stat-stores">+2,400</div>
+                            <div class="text-xs text-slate-400 mt-1">متجر إلكتروني يثق بنا</div>
+                        </div>
+                        <div class="p-3">
+                            <div class="text-2xl sm:text-3xl font-black text-brand-400 font-mono">99.9%</div>
+                            <div class="text-xs text-slate-400 mt-1">استقرار الخدمة وتضمن التشغيل</div>
+                        </div>
+                        <div class="p-3">
+                            <div class="text-2xl sm:text-3xl font-black text-amber-400 font-mono">&lt; 3 sec</div>
+                            <div class="text-xs text-slate-400 mt-1">سرعة الرد بالذكاء الاصطناعي</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Product Preview Showcase Mockup -->
+                <div class="relative max-w-5xl mx-auto rounded-3xl p-2 sm:p-4 bg-gradient-to-b from-white/15 to-white/5 border border-white/15 shadow-2xl shadow-brand-900/50">
+                    <div class="rounded-2xl bg-[#0C121E] overflow-hidden border border-slate-800 shadow-inner">
+                        <!-- Mac OS Top Bar Mock -->
+                        <div class="h-10 bg-[#080D17] px-4 flex items-center justify-between border-b border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                            </div>
+                            <div class="text-xs text-slate-500 font-mono flex items-center gap-2">
+                                <i class="fa-solid fa-lock text-emerald-500 text-[10px]"></i>
+                                app.chathub.sa/dashboard/live
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">متصل مباشر</span>
+                            </div>
+                        </div>
+
+                        <!-- Hero Interactive App Canvas Shell -->
+                        <div class="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-4 text-right">
+                            
+                            <!-- Left Mini Channels Sidebar -->
+                            <div class="hidden md:col-span-3 md:flex flex-col gap-3 border-l border-slate-800/80 pl-3">
+                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">القنوات المتصلة</div>
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/40 border border-slate-700/50">
+                                    <div class="flex items-center gap-2.5">
+                                        <i class="fa-brands fa-whatsapp text-emerald-400 text-lg"></i>
+                                        <div class="text-xs">
+                                            <div class="font-bold text-white">واتساب الأعمال</div>
+                                            <div class="text-[10px] text-emerald-400">نشط الآن</div>
+                                        </div>
+                                    </div>
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                </div>
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/40 border border-slate-700/50">
+                                    <div class="flex items-center gap-2.5">
+                                        <i class="fa-solid fa-bag-shopping text-sallaAccent text-lg"></i>
+                                        <div class="text-xs">
+                                            <div class="font-bold text-white">متجر سلة (Salla)</div>
+                                            <div class="text-[10px] text-sallaAccent">مربوط تلقائياً</div>
+                                        </div>
+                                    </div>
+                                    <span class="w-2 h-2 rounded-full bg-sallaAccent"></span>
+                                </div>
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/40 border border-slate-700/50">
+                                    <div class="flex items-center gap-2.5">
+                                        <i class="fa-brands fa-instagram text-pink-400 text-lg"></i>
+                                        <div class="text-xs">
+                                            <div class="font-bold text-white">إنستغرام DM</div>
+                                            <div class="text-[10px] text-slate-400">4 رسائل جديدة</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] bg-pink-500/20 text-pink-300 font-bold px-1.5 py-0.5 rounded">4</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/40 border border-slate-700/50">
+                                    <div class="flex items-center gap-2.5">
+                                        <i class="fa-brands fa-telegram text-sky-400 text-lg"></i>
+                                        <div class="text-xs">
+                                            <div class="font-bold text-white">بوت التليجرام</div>
+                                            <div class="text-[10px] text-emerald-400">نشط</div>
+                                        </div>
+                                    </div>
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                </div>
+                            </div>
+
+                            <!-- Right Chat & Automation Screen -->
+                            <div class="col-span-1 md:col-span-9 flex flex-col justify-between h-[340px] bg-[#090F1A] rounded-xl p-4 border border-slate-800/80">
+                                <!-- Chat Top Bar -->
+                                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="relative">
+                                            <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-sm">
+                                                أح
+                                            </div>
+                                            <span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#090F1A]"></span>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-white flex items-center gap-2">
+                                                أحمد الغامدي
+                                                <span class="text-[10px] bg-sallaAccent/20 text-sallaAccent font-bold px-2 py-0.5 rounded-full border border-sallaAccent/30">عميل سلة VIP</span>
+                                            </div>
+                                            <div class="text-[11px] text-slate-400">قادم من: واتساب (#WA-8842) • طلب رقم #9921</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs bg-brand-500/20 text-brand-300 px-3 py-1 rounded-lg border border-brand-500/30 flex items-center gap-1.5 font-semibold">
+                                            <i class="fa-solid fa-wand-magic-sparkles text-xs text-amber-400"></i>
+                                            الذكاء الاصطناعي يُجيب
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Messages Stream -->
+                                <div class="flex flex-col gap-3 my-auto overflow-y-auto px-1 py-2 text-xs">
+                                    <!-- Incoming message -->
+                                    <div class="self-start bg-slate-800/80 text-slate-200 max-w-[80%] p-3 rounded-2xl rounded-tr-none border border-slate-700/50">
+                                        مرحباً، هل شحن الطلب رقم #9921 خرج مع المندوب؟ ومتى متوقع وصوله؟
+                                        <span class="block text-[9px] text-slate-400 text-left mt-1">10:42 ص</span>
+                                    </div>
+
+                                    <!-- AI Auto Action Badge -->
+                                    <div class="self-center bg-brand-950/60 border border-brand-500/30 text-brand-300 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2 my-1">
+                                        <i class="fa-solid fa-bolt text-amber-400"></i>
+                                        <span>قام النظام جلب بيانات الشحنة من متجر سلة تلقائياً وإصدار الرد.</span>
+                                    </div>
+
+                                    <!-- Outgoing AI response -->
+                                    <div class="self-end bg-brand-600/90 text-white max-w-[80%] p-3 rounded-2xl rounded-tl-none shadow-md">
+                                        أهلاً بك أ. أحمد! نعم، تم تسليم طلبك رقم #9921 لشركة أرامكس. رقم التتبع هو: <span class="font-mono underline font-bold">SMS-993821</span>. المتوقع وصوله اليوم قبل الساعة 6 مساءً. 🚚
+                                        <div class="flex items-center justify-between text-[9px] text-brand-200 mt-1">
+                                            <span>تم الرد تلقائياً بواسطة AI</span>
+                                            <i class="fa-solid fa-check-double text-emerald-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Input Box Mock -->
+                                <div class="pt-2 border-t border-slate-800 flex items-center gap-2">
+                                    <input type="text" disabled placeholder="اكتب ردك أو اختر نموذج سريع..." class="bg-slate-900 border border-slate-800 text-xs text-slate-400 rounded-xl px-3 py-2 w-full cursor-not-allowed">
+                                    <button class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors">
+                                        إرسال
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TRUSTED BY / SOCIAL PROOF -->
+        <section class="py-12 border-y border-white/5 bg-[#0A0F1D]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-center text-xs font-bold text-slate-400 tracking-wider uppercase mb-8">
+                    متوافق ومربوط مع أكبر المنصات والتطبيقات العالمية والمحلية
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-6 items-center justify-center opacity-80">
+                    <div class="flex items-center justify-center gap-2 glass-panel p-3 rounded-xl border-white/5 hover:border-sallaAccent transition-all">
+                        <i class="fa-solid fa-bag-shopping text-sallaAccent text-xl"></i>
+                        <span class="font-bold text-sm text-slate-200">سلة Salla</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 glass-panel p-3 rounded-xl border-white/5 hover:border-emerald-500 transition-all">
+                        <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
+                        <span class="font-bold text-sm text-slate-200">WhatsApp Official</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 glass-panel p-3 rounded-xl border-white/5 hover:border-pink-500 transition-all">
+                        <i class="fa-brands fa-instagram text-pink-400 text-xl"></i>
+                        <span class="font-bold text-sm text-slate-200">Instagram API</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 glass-panel p-3 rounded-xl border-white/5 hover:border-sky-400 transition-all">
+                        <i class="fa-brands fa-telegram text-sky-400 text-xl"></i>
+                        <span class="font-bold text-sm text-slate-200">Telegram Bot</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 glass-panel p-3 rounded-xl border-white/5 hover:border-blue-500 transition-all">
+                        <i class="fa-brands fa-facebook-messenger text-blue-400 text-xl"></i>
+                        <span class="font-bold text-sm text-slate-200">Messenger</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 glass-panel p-3 rounded-xl border-white/5 hover:border-amber-400 transition-all">
+                        <i class="fa-solid fa-code-branch text-amber-400 text-xl"></i>
+                        <span class="font-bold text-sm text-slate-200">Custom Webhooks</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE FEATURE 1: UNIFIED INBOX (INTERACTIVE WIDGET) -->
+        <section id="inbox" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Text Content -->
+                    <div class="lg:col-span-5">
+                        <div class="inline-flex items-center gap-2 text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                            <i class="fa-solid fa-inbox"></i>
+                            <span>صندوق رسائل موحد متطور</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-6">
+                            جمع كافة رسائل عملائك في شاشة واحدة دون تشتت
+                        </h2>
+                        <p class="text-slate-300 text-base leading-relaxed mb-6">
+                            لا داعي للتنقل بين جوالات فريق الدعم وتطبيقات الواتساب وانستغرام وتليجرام. شات هَب يمنحك صندوقاً مركزياً تفاعلياً يوزع المحادثات، يوثق التذاكر، وينظم خدمة العملاء بذكاء.
+                        </p>
+
+                        <ul class="space-y-3 mb-8 text-sm">
+                            <li class="flex items-center gap-3 text-slate-200">
+                                <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+                                <span>توزيع المحادثات تلقائياً على الموظفين المتاحين.</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-200">
+                                <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+                                <span>دعم الرسائل الصوتية والصور والمستندات بجميع أنواعها.</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-200">
+                                <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+                                <span>وسوم متقدمة للعملاء (VIP، طلب جديد، شكوى، استفسار).</span>
+                            </li>
+                        </ul>
+
+                        <div class="p-4 rounded-2xl bg-brand-950/40 border border-brand-500/20 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/20 flex items-center justify-center text-brand-400 text-2xl">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">تحديثات فورية الحظية</h4>
+                                <p class="text-xs text-slate-400">استلام إشعارات فورية مع صوت تنبيهات مخصص لكل قناة.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Demo Widget -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-panel p-6 rounded-3xl border-white/10 shadow-2xl relative overflow-hidden">
+                            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                                    <span class="text-xs font-bold text-slate-300 mr-2">جرب التفاعل المباشر للصندوق:</span>
+                                </div>
+                                <button id="simulate-msg-btn" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>محاكاة وصول رسالة جديدة</span>
+                                </button>
+                            </div>
+
+                            <!-- Dynamic Inbox Simulated UI -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-[360px]">
+                                <!-- Contacts List -->
+                                <div class="bg-[#0B101D] rounded-xl p-3 border border-slate-800 flex flex-col gap-2 overflow-y-auto" id="inbox-contacts-list">
+                                    <!-- Dynamic elements inserted by JS -->
+                                </div>
+
+                                <!-- Active Chat Display -->
+                                <div class="md:col-span-2 bg-[#090E18] rounded-xl p-4 border border-slate-800 flex flex-col justify-between" id="inbox-active-chat">
+                                    <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-brands fa-whatsapp text-emerald-400 text-lg" id="chat-channel-icon"></i>
+                                            <span class="font-bold text-sm text-white" id="chat-contact-name">سارة الشهري</span>
+                                        </div>
+                                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded" id="chat-tag">استفسار منتج</span>
+                                    </div>
+
+                                    <div class="space-y-3 my-auto py-2 overflow-y-auto h-[220px]" id="chat-messages-container">
+                                        <!-- Messages rendered by JS -->
+                                    </div>
+
+                                    <div class="flex items-center gap-2 pt-2 border-t border-slate-800">
+                                        <input type="text" id="interactive-reply-input" placeholder="اكتب رداً سريعاً لتجربة النظام..." class="bg-slate-900 border border-slate-700 text-xs text-white rounded-lg px-3 py-2 flex-grow focus:outline-none focus:border-brand-500">
+                                        <button id="send-interactive-reply" class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-2 rounded-lg text-xs font-bold">
+                                            إرسال
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE FEATURE 2: AI ASSISTANT SECTION -->
+        <section id="ai" class="py-24 bg-[#090E19] relative border-y border-white/5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>الذكاء الاصطناعي الفائق Smart AI</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-4">
+                        مساعد ذكي يفهم عملائك ويرد بنبرة براندك
+                    </h2>
+                    <p class="text-slate-300 text-base">
+                        زوّد شات هَب بملفات كتالوج المنتجات، سياسة الاستبدال، والأسئلة الشائعة، ودع الذكاء الاصطناعي يجيب على 80% من استفسارات العملاء بدقة وإتقان.
+                    </p>
+                </div>
+
+                <!-- AI Interactive Simulator Widget -->
+                <div class="max-w-4xl mx-auto glass-panel rounded-3xl p-6 sm:p-8 border-brand-500/30 shadow-2xl">
+                    <div class="flex flex-col md:flex-row gap-8 items-center">
+                        
+                        <!-- AI Controls / Selector -->
+                        <div class="w-full md:w-1/2 space-y-4">
+                            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-sliders text-brand-400"></i>
+                                اختر سيناريو تجربة الرد الذكي:
+                            </h3>
+                            
+                            <div class="space-y-2">
+                                <button onclick="setAiScenario('shipping')" class="ai-scenario-btn active w-full p-3 rounded-xl text-right border text-xs font-semibold transition-all bg-brand-600/20 border-brand-500 text-white flex items-center justify-between">
+                                    <span>1. استفسار عن مواعيد وأسعار الشحن</span>
+                                    <i class="fa-solid fa-truck-fast"></i>
+                                </button>
+                                <button onclick="setAiScenario('return')" class="ai-scenario-btn w-full p-3 rounded-xl text-right border text-xs font-semibold transition-all bg-slate-800/40 border-slate-700/60 text-slate-300 hover:border-brand-500/50 flex items-center justify-between">
+                                    <span>2. طلب استبدال واسترجاع منتج</span>
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
+                                <button onclick="setAiScenario('discount')" class="ai-scenario-btn w-full p-3 rounded-xl text-right border text-xs font-semibold transition-all bg-slate-800/40 border-slate-700/60 text-slate-300 hover:border-brand-500/50 flex items-center justify-between">
+                                    <span>3. طلب كود خصم أو العروض الحالية</span>
+                                    <i class="fa-solid fa-tags"></i>
+                                </button>
+                            </div>
+
+                            <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+                                <strong class="text-amber-400 block mb-1"><i class="fa-solid fa-lightbulb"></i> كيف يعمل؟</strong>
+                                يحلل النظام النية (Intent) والسياق من رسالة العميل، يستعلم من قاعدة معرفة متجرك، ثم يصيغ رداً مخصصاً ولطيفاً خلال ثوانٍ.
+                            </div>
+                        </div>
+
+                        <!-- AI Response Live Box -->
+                        <div class="w-full md:w-1/2 bg-[#060A12] p-5 rounded-2xl border border-slate-800 relative">
+                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+                                <span class="text-xs font-bold text-slate-400">المعاينة الحية لنشاط AI</span>
+                                <span id="ai-status" class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono">جاهز</span>
+                            </div>
+
+                            <div id="ai-preview-box" class="space-y-3 min-h-[180px] flex flex-col justify-center">
+                                <!-- Dynamic Content injected via JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CORE FEATURE 3: SALLA INTEGRATION (KEY HIGHLIGHT) -->
+        <section id="salla" class="py-24 relative overflow-hidden bg-gradient-to-b from-[#080C14] via-[#002B33]/20 to-[#080C14]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-6">
+                        <div class="inline-flex items-center gap-2 text-sallaAccent bg-sallaAccent/10 border border-sallaAccent/30 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            <span>تكامل مع متجر سلة Salla App Store</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-6">
+                            ربط نقرة واحدة مع منصة <span class="text-sallaAccent">سلة Salla</span>
+                        </h2>
+                        <p class="text-slate-300 text-base leading-relaxed mb-6">
+                            حفرنا عميقاً في API سلة لنقدم لك أقوى تجربة أتمتة للمتجر. أرسل إشعارات التتبع، استرجع السلات المتروكة، وأرسل أكواد تحقق OTP عبر الواتساب مباشرة بضغطة زر.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            <div class="p-3.5 rounded-xl glass-panel border-sallaAccent/20">
+                                <i class="fa-solid fa-cart-arrow-down text-sallaAccent text-lg mb-2 block"></i>
+                                <h4 class="font-bold text-white text-sm mb-1">استرجاع السلات المتروكة</h4>
+                                <p class="text-xs text-slate-400">إرسال رابط السلة المتروكة تلقائياً مع كود خصم تحفيزي.</p>
+                            </div>
+                            <div class="p-3.5 rounded-xl glass-panel border-sallaAccent/20">
+                                <i class="fa-solid fa-bell text-amber-400 text-lg mb-2 block"></i>
+                                <h4 class="font-bold text-white text-sm mb-1">تحديثات حالة الطلب</h4>
+                                <p class="text-xs text-slate-400">إشعار العميل عند (جاري الإعداد، تم الشحن، قيد التوصيل).</p>
+                            </div>
+                            <div class="p-3.5 rounded-xl glass-panel border-sallaAccent/20">
+                                <i class="fa-solid fa-key text-sky-400 text-lg mb-2 block"></i>
+                                <h4 class="font-bold text-white text-sm mb-1">رسائل OTP للتحقق</h4>
+                                <p class="text-xs text-slate-400">توفير تكاليف SMS وإرسال رمز الدخول عبر الواتساب الموثق.</p>
+                            </div>
+                            <div class="p-3.5 rounded-xl glass-panel border-sallaAccent/20">
+                                <i class="fa-solid fa-star text-yellow-400 text-lg mb-2 block"></i>
+                                <h4 class="font-bold text-white text-sm mb-1">طلب التقييم والمراجعات</h4>
+                                <p class="text-xs text-slate-400">إرسال استبيان التقييم بعد 3 أيام من استلام الطلب تلقائياً.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Interactive Salla Notification Tester -->
+                    <div class="lg:col-span-6">
+                        <div class="bg-[#051119] p-6 rounded-3xl border border-sallaAccent/30 shadow-2xl relative">
+                            <div class="flex items-center justify-between pb-4 border-b border-sallaAccent/20 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-sallaAccent/20 flex items-center justify-center text-sallaAccent font-bold text-lg">
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-white">اختبر إشعارات سلة الحية</h3>
+                                        <p class="text-[11px] text-slate-400">اضغط على أحداث المتجر لترى كيف ستصل للعميل</p>
+                                    </div>
+                                </div>
+                                <span class="bg-sallaAccent/20 text-sallaAccent text-[10px] font-bold px-2.5 py-1 rounded-full">Salla Webhook Ready</span>
+                            </div>
+
+                            <!-- Buttons Trigger Events -->
+                            <div class="grid grid-cols-2 gap-3 mb-6">
+                                <button onclick="triggerSallaEvent('new_order')" class="salla-event-btn p-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-sallaAccent text-xs text-right font-semibold text-slate-200 transition-all flex items-center justify-between">
+                                    <span>طلب جديد #1029</span>
+                                    <i class="fa-solid fa-bag-shopping text-emerald-400"></i>
+                                </button>
+                                <button onclick="triggerSallaEvent('cart_abandoned')" class="salla-event-btn p-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-sallaAccent text-xs text-right font-semibold text-slate-200 transition-all flex items-center justify-between">
+                                    <span>سلة متروكة (سارة)</span>
+                                    <i class="fa-solid fa-cart-shopping text-amber-400"></i>
+                                </button>
+                                <button onclick="triggerSallaEvent('shipped')" class="salla-event-btn p-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-sallaAccent text-xs text-right font-semibold text-slate-200 transition-all flex items-center justify-between">
+                                    <span>تم الشحن (أرامكس)</span>
+                                    <i class="fa-solid fa-truck-fast text-sky-400"></i>
+                                </button>
+                                <button onclick="triggerSallaEvent('review')" class="salla-event-btn p-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-sallaAccent text-xs text-right font-semibold text-slate-200 transition-all flex items-center justify-between">
+                                    <span>طلب تقييم التجربة</span>
+                                    <i class="fa-solid fa-star text-yellow-400"></i>
+                                </button>
+                            </div>
+
+                            <!-- Phone Preview Screen Mockup -->
+                            <div class="max-w-xs mx-auto bg-black p-3 rounded-[35px] border-4 border-slate-700 shadow-2xl relative">
+                                <div class="w-20 h-4 bg-slate-800 rounded-full mx-auto mb-2"></div>
+                                <div class="bg-[#0B141A] rounded-[25px] p-3 min-h-[220px] text-xs flex flex-col justify-end" id="salla-phone-screen">
+                                    <!-- Dynamic Whatsapp Bubble Message -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CORE FEATURE 4: AUTOMATION WORKFLOWS & AUTO-RESPONSES -->
+        <section id="workflows" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>مُنشئ المسارات والأتمتة Visual Workflows</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-4">
+                        ابنِ مسارات محادثة معقدة بأسلوب السحب والإفلات
+                    </h2>
+                    <p class="text-slate-300 text-base">
+                        حدد الكلمات المفتاحية، الشروط، والردود المتسلسلة دون الحاجة لأي خبرة برمجية.
+                    </p>
+                </div>
+
+                <!-- Workflow Graphic Representation Interactive -->
+                <div class="glass-panel rounded-3xl p-6 sm:p-10 border-white/10 shadow-2xl overflow-x-auto">
+                    <div class="min-w-[700px] flex items-center justify-between gap-4 relative">
+                        
+                        <!-- Connecting Line SVG -->
+                        <div class="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-brand-500 to-indigo-500 -z-10 -translate-y-1/2 opacity-30"></div>
+
+                        <!-- Node 1 Trigger -->
+                        <div class="w-56 glass-panel p-4 rounded-2xl border-emerald-500/40 relative group hover:scale-105 transition-transform bg-[#0D1424]">
+                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded-full mb-2 inline-block">1. المشغّل (Trigger)</span>
+                            <div class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-bolt text-emerald-400 ml-1"></i> استقبال كلمة مفتاحية</div>
+                            <p class="text-[11px] text-slate-400">العميل يكتب: "أسعار، باقات، كم السعر"</p>
+                        </div>
+
+                        <!-- Arrow Icon -->
+                        <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shadow-lg">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </div>
+
+                        <!-- Node 2 Logic Condition -->
+                        <div class="w-56 glass-panel p-4 rounded-2xl border-brand-500/40 relative group hover:scale-105 transition-transform bg-[#0D1424]">
+                            <span class="text-[10px] bg-brand-500/20 text-brand-300 font-bold px-2 py-0.5 rounded-full mb-2 inline-block">2. الشرط (Condition)</span>
+                            <div class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-filter text-brand-400 ml-1"></i> التحقق من ساعات العمل</div>
+                            <p class="text-[11px] text-slate-400">هل الوقت بين 9 صباحاً و11 مساءً؟</p>
+                        </div>
+
+                        <!-- Arrow Icon -->
+                        <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shadow-lg">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </div>
+
+                        <!-- Node 3 Action Response -->
+                        <div class="w-56 glass-panel p-4 rounded-2xl border-amber-500/40 relative group hover:scale-105 transition-transform bg-[#0D1424]">
+                            <span class="text-[10px] bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full mb-2 inline-block">3. الإجراء (Action)</span>
+                            <div class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-paper-plane text-amber-400 ml-1"></i> إرسال نموذج أزرار</div>
+                            <p class="text-[11px] text-slate-400">إرسال قائمة بالباقات مع زر "اشترك الآن"</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CORE FEATURE 5: TEMPLATES & INTERACTIVE BUTTON MESSAGES -->
+        <section id="templates" class="py-20 bg-[#0A0F1D]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-6 order-2 lg:order-1">
+                        <!-- Interactive Template Live Preview -->
+                        <div class="glass-panel p-6 rounded-3xl border-white/10 shadow-2xl">
+                            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+                                <span class="text-xs font-bold text-slate-300">منشئ القوالب المعتمدة (WhatsApp Approved Templates)</span>
+                                <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded">موثق من Meta</span>
+                            </div>
+
+                            <div class="bg-[#0B141A] p-4 rounded-2xl border border-slate-800 max-w-sm mx-auto space-y-3">
+                                <div class="text-xs text-white leading-relaxed">
+                                    مرحباً <span class="bg-brand-500/30 text-brand-300 px-1.5 py-0.5 rounded font-mono">{{1}}</span> 👋<br>
+                                    شكراً لتسوقك من متجرنا! تم تأكيد طلبك رقم <span class="bg-brand-500/30 text-brand-300 px-1.5 py-0.5 rounded font-mono">{{2}}</span> بقيمة <span class="bg-brand-500/30 text-brand-300 px-1.5 py-0.5 rounded font-mono">{{3}}</span> ر.س.
+                                </div>
+                                <div class="space-y-2 pt-2 border-t border-slate-800/80">
+                                    <button class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold rounded-lg border border-slate-700/60 flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-truck-fast"></i>
+                                        <span>تتبع الشحنة</span>
+                                    </button>
+                                    <button class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-sky-400 text-xs font-bold rounded-lg border border-slate-700/60 flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-headset"></i>
+                                        <span>التحدث مع الدعم الفني</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 order-1 lg:order-2">
+                        <div class="inline-flex items-center gap-2 text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                            <i class="fa-solid fa-cubes"></i>
+                            <span>قوالب الرسائل التفاعلية</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-6">
+                            رسائل جذابة تحتوي على أزرار وقوائم خيارات سريعة
+                        </h2>
+                        <p class="text-slate-300 text-base leading-relaxed mb-6">
+                            تخلى عن النصوص الطويلة المملة! استخدم القوالب التفاعلية لتُمكّن العملاء من الضغط على الأزرار مباشرة دون الحاجة للكتابة، مما يرفع نسبة التفاعل والتحويل بمقدار 3X.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE FEATURE 6: PWA & MOBILE SUPPORT -->
+        <section class="py-20 relative bg-gradient-to-r from-brand-950 via-[#090E1A] to-brand-950 border-y border-brand-500/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="inline-flex items-center gap-2 text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full text-xs font-bold mb-6">
+                    <i class="fa-solid fa-mobile-screen-button text-base"></i>
+                    <span>تطبيق PWA مجاني للخدمة من الجوال</span>
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-6">
+                    ثبّت ChatHub كـ تطبيق جوال مستمر دون الحاجة للمتاجر
+                </h2>
+                <p class="text-slate-300 text-base max-w-2xl mx-auto mb-10">
+                    يدعم شات هَب تقنية Progressive Web App (PWA) للعمل فوراً على آيفون (iOS) وأندرويد والكمبيوتر، مع إشعارات Push ناطقة وتنبيهات مستمرة.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-6">
+                    <div class="glass-panel px-6 py-4 rounded-2xl flex items-center gap-3 border-white/10">
+                        <i class="fa-brands fa-apple text-3xl text-white"></i>
+                        <div class="text-right">
+                            <div class="text-xs text-slate-400">يدعم أجهزة</div>
+                            <div class="text-sm font-bold text-white">iPhone & iPad (iOS)</div>
+                        </div>
+                    </div>
+                    <div class="glass-panel px-6 py-4 rounded-2xl flex items-center gap-3 border-white/10">
+                        <i class="fa-brands fa-android text-3xl text-emerald-400"></i>
+                        <div class="text-right">
+                            <div class="text-xs text-slate-400">يدعم أجهزة</div>
+                            <div class="text-sm font-bold text-white">Android Devices</div>
+                        </div>
+                    </div>
+                    <div class="glass-panel px-6 py-4 rounded-2xl flex items-center gap-3 border-white/10">
+                        <i class="fa-solid fa-desktop text-3xl text-brand-400"></i>
+                        <div class="text-right">
+                            <div class="text-xs text-slate-400">يدعم أجهزة</div>
+                            <div class="text-sm font-bold text-white">Windows & Mac Apps</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING & SUBSCRIPTIONS SECTION -->
+        <section id="pricing" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                        <i class="fa-solid fa-tag"></i>
+                        <span>باقات واسعار شفافة بدون رسوم خفية</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-4">
+                        اختر الباقة المناسبة لحجم أعمالك
+                    </h2>
+                    <p class="text-slate-300 text-base">
+                        جميع الباقات تشمل فترة تجريبية مجانية لمدة 14 يوم بدون الحاجة لبطاقة ائتمان.
+                    </p>
+
+                    <!-- Billing Toggle -->
+                    <div class="flex items-center justify-center gap-4 mt-8">
+                        <span class="text-sm font-bold text-slate-300" id="monthly-label">توفير شهري</span>
+                        <button id="pricing-toggle" class="w-14 h-8 bg-brand-600 rounded-full p-1 transition-colors relative focus:outline-none">
+                            <div id="pricing-toggle-circle" class="w-6 h-6 bg-white rounded-full transition-transform transform translate-x-0"></div>
+                        </button>
+                        <span class="text-sm font-bold text-white flex items-center gap-1.5" id="yearly-label">
+                            اشتراك سنوي
+                            <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">خصم 20%</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Pricing Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                    
+                    <!-- Starter Plan -->
+                    <div class="glass-panel p-8 rounded-3xl border-white/10 flex flex-col justify-between hover:border-slate-700 transition-all">
+                        <div>
+                            <div class="text-xs font-bold text-brand-400 uppercase tracking-wider mb-2">الباقة الأساسية</div>
+                            <h3 class="text-2xl font-black text-white mb-4">الرواد (Starter)</h3>
+                            <p class="text-xs text-slate-400 mb-6">مناسبة للمتاجر الجديدة والأعمال الناشئة لبدء الأتمتة.</p>
+                            
+                            <div class="mb-6 pb-6 border-b border-white/10">
+                                <span class="text-4xl font-black text-white price-value" data-monthly="199" data-yearly="159">199</span>
+                                <span class="text-xs text-slate-400">ر.س / شهرياً</span>
+                            </div>
+
+                            <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> صندوق موحد (مستخدم واحد)</li>
+                                <li class="flex items-center gap-2"><li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> ربط حساب واتساب واحد + انستغرام</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> ربط متجر سلة Salla تلقائي</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 1,000 رصيد رداً ذكياً بالـ AI</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> استرجاع السلات المتروكة الأساسي</li>
+                            </ul>
+                        </div>
+
+                        <a href="#demo" class="w-full py-3 text-center bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl border border-slate-700 transition-colors">
+                            ابدأ التجربة المجانية
+                        </a>
+                    </div>
+
+                    <!-- Pro Plan (Popular Highlight) -->
+                    <div class="glass-panel p-8 rounded-3xl border-brand-500/50 bg-brand-950/20 relative flex flex-col justify-between shadow-2xl shadow-brand-500/20 transform md:-translate-y-4">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-500 to-emerald-500 text-white text-[11px] font-black px-4 py-1 rounded-full uppercase tracking-wider shadow-md">
+                            الأكثر طلباً واختياراً
+                        </div>
+
+                        <div>
+                            <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">الباقة المتقدمة</div>
+                            <h3 class="text-2xl font-black text-white mb-4">النمو (Pro Growth)</h3>
+                            <p class="text-xs text-slate-300 mb-6">مثالية للمتاجر النشطة التي تحتاج فريق عمل ومسارات أتمتة قوية.</p>
+                            
+                            <div class="mb-6 pb-6 border-b border-white/10">
+                                <span class="text-5xl font-black text-white price-value" data-monthly="399" data-yearly="319">399</span>
+                                <span class="text-xs text-slate-400">ر.س / شهرياً</span>
+                            </div>
+
+                            <ul class="space-y-3 text-xs text-slate-200 mb-8">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> حتى 5 موظفين على نفس الصندوق</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> ربط كافة القنوات (واتساب، انستغرام، تليجرام)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> ربط متكامل ومتقدم مع سلة Salla</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 10,000 رصيد ذكاء اصطناعي للردود</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> منشئ مسارات أتمتة غير محدود (Workflows)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> إرسال حملات الواتساب المستهدفة</li>
+                            </ul>
+                        </div>
+
+                        <a href="#demo" class="w-full py-3.5 text-center bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold text-xs rounded-xl shadow-lg shadow-brand-500/30 transition-all">
+                            تجربة الباقة مجاناً الآن
+                        </a>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="glass-panel p-8 rounded-3xl border-white/10 flex flex-col justify-between hover:border-slate-700 transition-all">
+                        <div>
+                            <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">الباقة الشاملة</div>
+                            <h3 class="text-2xl font-black text-white mb-4">الشركات (Enterprise)</h3>
+                            <p class="text-xs text-slate-400 mb-6">للعلامات التجارية الكبرى التي تتطلب حلاً مخصصاً وسرعات فائقة.</p>
+                            
+                            <div class="mb-6 pb-6 border-b border-white/10">
+                                <span class="text-4xl font-black text-white price-value" data-monthly="899" data-yearly="719">899</span>
+                                <span class="text-xs text-slate-400">ر.س / شهرياً</span>
+                            </div>
+
+                            <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> عدد لا محدود من الموظفين والمستخدمين</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> سيرفرات مخصصة وسرعة معالجة عالية</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> رصيد ذكاء اصطناعي غير محدود</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> مدير حساب خاص ودعم مباشر 24/7</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> ربط API خاص وCustom Webhooks</li>
+                            </ul>
+                        </div>
+
+                        <a href="#demo" class="w-full py-3 text-center bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl border border-slate-700 transition-colors">
+                            تواصل مع فريق المبيعات
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ ACCORDION SECTION -->
+        <section id="faq" class="py-24 bg-[#090E19] border-t border-white/5">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">الأسئلة الشائعة FAQ</h2>
+                    <p class="text-slate-400 text-sm">كل ما تحتاج معرفته عن منصة ChatHub وكيفية بدء العمل بها.</p>
+                </div>
+
+                <div class="space-y-4" id="faq-container">
+                    
+                    <div class="faq-item glass-panel rounded-2xl p-5 border-white/5 cursor-pointer transition-all">
+                        <div class="flex items-center justify-between font-bold text-white text-sm sm:text-base">
+                            <span>هل يتطلب ربط متجر سلة أي خبرة برمجية؟</span>
+                            <i class="fa-solid fa-chevron-down text-brand-400 transition-transform"></i>
+                        </div>
+                        <div class="faq-answer hidden text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+                            لا أبداً! يتم الربط عبر تطبيق ChatHub المعتمد في متجر تطبيقات سلة بضغطة زر واحدة، ويتم مزامنة المنتجات والطلبات تلقائياً فوراً.
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-panel rounded-2xl p-5 border-white/5 cursor-pointer transition-all">
+                        <div class="flex items-center justify-between font-bold text-white text-sm sm:text-base">
+                            <span>ما هي قنوات التواصل التي أستطيع ربطها في الصندوق الموحد؟</span>
+                            <i class="fa-solid fa-chevron-down text-brand-400 transition-transform"></i>
+                        </div>
+                        <div class="faq-answer hidden text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+                            تستطيع ربط حسابات الواتساب الرسمية، رسائل انستغرام المباشرة (Instagram DM)، بوتات التليجرام، وفيسبوك ماسنجر، بالإضافة إلى الدردشة المباشرة للموقع.
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-panel rounded-2xl p-5 border-white/5 cursor-pointer transition-all">
+                        <div class="flex items-center justify-between font-bold text-white text-sm sm:text-base">
+                            <span>كيف يساعدني الذكاء الاصطناعي AI في خفض التكاليف؟</span>
+                            <i class="fa-solid fa-chevron-down text-brand-400 transition-transform"></i>
+                        </div>
+                        <div class="faq-answer hidden text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+                            يقوم مساعد الذكاء الاصطناعي بالإجابة المباشرة على الاستفسارات المكررة مثل (أسعار الشحن، حالة الطلب، سياسة الاسترجاع) على مدار 24 ساعة، مما يقلل الحاجة لزيادة عدد موظفي الدعم.
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-panel rounded-2xl p-5 border-white/5 cursor-pointer transition-all">
+                        <div class="flex items-center justify-between font-bold text-white text-sm sm:text-base">
+                            <span>هل يمكن استخدام المنصة عبر أجهزة الموبايل؟</span>
+                            <i class="fa-solid fa-chevron-down text-brand-400 transition-transform"></i>
+                        </div>
+                        <div class="faq-answer hidden text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+                            نعم! شات هَب مصمم ليعمل كـ تطبيق PWA ممتاز على أجهزة الآيفون والأندرويد مع دعم كامل للإشعارات الفورية والصوتية.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FINAL CTA SECTION -->
+        <section class="py-24 relative overflow-hidden bg-gradient-to-b from-[#090E19] to-[#04070D]">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                
+                <div class="glass-panel p-10 sm:p-16 rounded-3xl border-brand-500/30 glow-border bg-gradient-to-tr from-brand-950/80 via-[#0B132B] to-emerald-950/40 shadow-2xl">
+                    <div class="w-16 h-16 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center mx-auto text-3xl mb-6 shadow-lg shadow-brand-500/20">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+
+                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-6">
+                        جاهز لأتمتة متجرك ومضاعفة مبيعاتك؟
+                    </h2>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-10">
+                        انضم إلى أكثر من 2,400+ متجر إلكتروني يثقون بمنصة ChatHub لخدمة عملائهم يومياً.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="#pricing" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold text-base rounded-2xl shadow-xl shadow-brand-500/30 transition-all flex items-center justify-center gap-2">
+                            <span>ابدأ التجربة المجانية لمدة 14 يوم</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-4">لا تتطلب بطاقة ائتمان • إعداد سريع خلال 3 دقائق</div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#04070D] border-t border-white/5 py-12 text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <span class="text-xl font-black text-white">ChatHub</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-4">
+                        منصة التواصل الشاملة والأتمتة الذكية للمتاجر والشركات في المملكة والخليج.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3">المنتج والحلول</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#inbox" class="hover:text-white transition-colors">الصندوق الموحد</a></li>
+                        <li><a href="#ai" class="hover:text-white transition-colors">مساعد AI</a></li>
+                        <li><a href="#salla" class="hover:text-sallaAccent transition-colors">ربط سلة Salla</a></li>
+                        <li><a href="#workflows" class="hover:text-white transition-colors">مُنشئ المسارات</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3">روابط مفيدة</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#pricing" class="hover:text-white transition-colors">الباقات والأسعار</a></li>
+                        <li><a href="#faq" class="hover:text-white transition-colors">الأسئلة الشائعة</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">مدونة المنصة</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">توثيق الـ API</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3">تواصل معنا</h4>
+                    <div class="space-y-2">
+                        <p><i class="fa-solid fa-envelope ml-2 text-brand-400"></i> support@chathub.sa</p>
+                        <p><i class="fa-solid fa-phone ml-2 text-brand-400"></i> +966 9200 00000</p>
+                        <div class="flex gap-3 text-base text-slate-300 mt-4">
+                            <a href="#" class="hover:text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="#" class="hover:text-sky-400"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="hover:text-pink-400"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-slate-500 gap-4">
+                <div>جميع الحقوق محفوظة © 2026 لشركة ChatHub SaaS.</div>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-slate-300">الشروط والأحكام</a>
+                    <a href="#" class="hover:text-slate-300">سياسة الخصوصية</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LIVE TOAST NOTIFICATION CONTAINER FOR SIMULATION -->
+    <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-3 max-w-sm"></div>
+
+    <!-- JAVASCRIPT FOR INTERACTIVE WIDGETS AND DYNAMIC LOGIC -->
+    <script>
+        // --- 1. Mobile Menu Drawer Toggle ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // --- 2. Dynamic Unified Inbox Interactive Simulation ---
+        const sampleContacts = [
+            { id: 1, name: 'سارة الشهري', channel: 'whatsapp', tag: 'استفسار منتج', icon: 'fa-brands fa-whatsapp text-emerald-400', unread: 2, lastMsg: 'هل الشحن مجاني للرياض؟' },
+            { id: 2, name: 'متجر فهد للقهوة', channel: 'salla', tag: 'عميل VIP', icon: 'fa-solid fa-bag-shopping text-sallaAccent', unread: 0, lastMsg: 'تم تأكيد الدفع عبر سلة' },
+            { id: 3, name: 'خالد المطيري', channel: 'instagram', tag: 'استرجاع', icon: 'fa-brands fa-instagram text-pink-400', unread: 1, lastMsg: 'أريد تغيير المقاس' }
+        ];
+
+        let activeContactId = 1;
+        let messagesData = {
+            1: [
+                { sender: 'them', text: 'مرحباً، هل الشحن مجاني للرياض عند الشراء بـ 300 ريال؟', time: '11:02 ص' },
+                { sender: 'me', text: 'أهلاً بك أ. سارة! نعم صحيح، الشحن مجاني لكافة مناطق المملكة للطلبات فوق 250 ريال 🚚', time: '11:03 ص' }
+            ],
+            2: [
+                { sender: 'them', text: 'تم إنشاء الطلب رقم #9932 بنجاح.', time: '10:15 ص' }
+            ],
+            3: [
+                { sender: 'them', text: 'أهلاً، أريد تغيير مقاس القميص قبل الشحن.', time: '09:30 ص' }
+            ]
+        };
+
+        function renderContacts() {
+            const container = document.getElementById('inbox-contacts-list');
+            container.innerHTML = '';
+            
+            sampleContacts.forEach(c => {
+                const isActive = c.id === activeContactId;
+                const card = document.createElement('div');
+                card.className = `p-2.5 rounded-xl cursor-pointer transition-all border ${
+                    isActive ? 'bg-brand-600/20 border-brand-500/50' : 'bg-slate-900/40 border-slate-800 hover:border-slate-700'
+                }`;
+                card.onclick = () => selectContact(c.id);
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="flex items-center gap-2">
+                            <i class="${c.icon} text-sm"></i>
+                            <span class="font-bold text-xs text-white">${c.name}</span>
+                        </div>
+                        ${c.unread > 0 ? `<span class="bg-brand-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full">${c.unread}</span>` : ''}
+                    </div>
+                    <p class="text-[10px] text-slate-400 truncate">${c.lastMsg}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('chat-messages-container');
+            container.innerHTML = '';
+            const msgs = messagesData[activeContactId] || [];
+
+            msgs.forEach(m => {
+                const div = document.createElement('div');
+                if (m.sender === 'them') {
+                    div.className = 'self-start bg-slate-800 text-slate-200 p-2.5 rounded-xl rounded-tr-none text-xs max-w-[85%] border border-slate-700/50';
+                } else {
+                    div.className = 'self-end bg-brand-600 text-white p-2.5 rounded-xl rounded-tl-none text-xs max-w-[85%] shadow-md';
+                }
+                div.innerHTML = `${m.text} <span class="block text-[8px] opacity-60 mt-1 ${m.sender==='me'?'text-left':''}">${m.time}</span>`;
+                container.appendChild(div);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function selectContact(id) {
+            activeContactId = id;
+            const contact = sampleContacts.find(c => c.id === id);
+            if (contact) {
+                contact.unread = 0;
+                document.getElementById('chat-contact-name').innerText = contact.name;
+                document.getElementById('chat-tag').innerText = contact.tag;
+                document.getElementById('chat-channel-icon').className = `${contact.icon} text-lg`;
+            }
+            renderContacts();
+            renderMessages();
+        }
+
+        // Handle Interactive Reply Input
+        document.getElementById('send-interactive-reply').addEventListener('click', () => {
+            const input = document.getElementById('interactive-reply-input');
+            const val = input.value.trim();
+            if(!val) return;
+
+            messagesData[activeContactId].push({
+                sender: 'me',
+                text: val,
+                time: 'الآن'
+            });
+            input.value = '';
+            renderMessages();
+        });
+
+        // Simulate Incoming Message Event
+        document.getElementById('simulate-msg-btn').addEventListener('click', () => {
+            const names = ['محمد العتيبي', 'نورة الدوسري', 'عبدالله الشمري'];
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const newId = Date.now();
+
+            sampleContacts.unshift({
+                id: newId,
+                name: randomName,
+                channel: 'whatsapp',
+                tag: 'طلب جديد',
+                icon: 'fa-brands fa-whatsapp text-emerald-400',
+                unread: 1,
+                lastMsg: 'أهلاً، هل يتوفر لون أسود من هذا المنتج؟'
+            });
+
+            messagesData[newId] = [
+                { sender: 'them', text: 'أهلاً، هل يتوفر لون أسود من هذا المنتج؟', time: 'الآن' }
+            ];
+
+            showToast('رسالة جديدة وصلت!', `استلمت رسالة واتساب من ${randomName}`, 'fa-brands fa-whatsapp text-emerald-400');
+            renderContacts();
+        });
+
+        // Init Inbox
+        renderContacts();
+        renderMessages();
+
+        // --- 3. AI Simulator Logic ---
+        const aiScenarios = {
+            shipping: {
+                question: "كم تكلفة الشحن لمدينة جازان كم استغرق وقت؟",
+                reply: "أهلاً بك! الشحن لمدينة جازان يبلغ 25 ر.س عبر أرامكس، ويستغرق من 2 إلى 4 أيام عمل. وشحنك مجاني لو طلبك يتجاوز 250 ر.س! 🚛",
+                action: "جلب سياسة الشحن تلقائياً"
+            },
+            return: {
+                question: "وصلني المقاس صغير، كيف أستبدل المنتج؟",
+                reply: "ولا يهمك! يمكنك طلب الاستبدال مجاناً خلال 7 أيام من الاستلام. تفضل بالضغط على هذا الرابط لتوليد بوليصة الإرجاع: salla.sa/returns/99",
+                action: "إنشاء بوليصة إرجاع تلقائية"
+            },
+            discount: {
+                question: "هل يوجد كود خصم متاح الآن؟",
+                reply: "يسعدنا اهتمامك! يمكنك استخدام كود الخصم (CHATHUB10) للحصول على خصم 10% إضافي على طلبك الحالي 🎉",
+                action: "تطبيق كود الخصم"
+            }
+        };
+
+        function setAiScenario(key) {
+            document.querySelectorAll('.ai-scenario-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-600/20', 'border-brand-500', 'text-white');
+                btn.classList.add('bg-slate-800/40', 'border-slate-700/60', 'text-slate-300');
+            });
+            event.currentTarget.classList.add('active', 'bg-brand-600/20', 'border-brand-500', 'text-white');
+
+            const box = document.getElementById('ai-preview-box');
+            const data = aiScenarios[key];
+
+            box.innerHTML = `
+                <div class="bg-slate-800/80 text-slate-200 text-xs p-3 rounded-xl border border-slate-700/50">
+                    <span class="text-[10px] text-slate-400 block mb-1">العميل:</span>
+                    ${data.question}
+                </div>
+                <div class="bg-brand-900/50 border border-brand-500/30 text-brand-200 text-[11px] p-2 rounded-lg flex items-center gap-2">
+                    <i class="fa-solid fa-gear animate-spin text-amber-400"></i>
+                    <span>إجراء النظام: ${data.action}</span>
+                </div>
+                <div class="bg-brand-600 text-white text-xs p-3 rounded-xl shadow-lg">
+                    <span class="text-[10px] text-brand-200 block mb-1">رد الذكاء الاصطناعي (AI):</span>
+                    ${data.reply}
+                </div>
+            `;
+        }
+        // Initialize AI Default Scenario
+        setAiScenario('shipping');
+
+        // --- 4. Salla Phone Simulator ---
+        function triggerSallaEvent(type) {
+            const screen = document.getElementById('salla-phone-screen');
+            let content = '';
+
+            if (type === 'new_order') {
+                content = `
+                    <div class="bg-slate-800 text-white p-2.5 rounded-xl border border-sallaAccent/30 text-[11px] space-y-1">
+                        <div class="font-bold text-sallaAccent flex items-center justify-between">
+                            <span>تأكيد طلب جديد #1029</span>
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+                        <p>مرحباً بك! تم استلام طلبك بقيمة 340 ر.س بنجاح. جاري تجهيز المنتجات حالياً. ✨</p>
+                    </div>
+                `;
+            } else if (type === 'cart_abandoned') {
+                content = `
+                    <div class="bg-slate-800 text-white p-2.5 rounded-xl border border-amber-500/30 text-[11px] space-y-1">
+                        <div class="font-bold text-amber-400 flex items-center justify-between">
+                            <span>نسيت شيئاً في السلة؟ 🛒</span>
+                        </div>
+                        <p>سارة العزيزة، منتجاتك بانتظارك! أكمل الشراء الآن واحصل على خصم 5% بكود: SAVE5</p>
+                    </div>
+                `;
+            } else if (type === 'shipped') {
+                content = `
+                    <div class="bg-slate-800 text-white p-2.5 rounded-xl border border-sky-500/30 text-[11px] space-y-1">
+                        <div class="font-bold text-sky-400 flex items-center justify-between">
+                            <span>طلبك في الطريق! 🚚</span>
+                        </div>
+                        <p>تم تسليم شحنتك لشركة أرامكس. رقم التتبع: SMS-20391. يسعدنا خدمتك دائماً.</p>
+                    </div>
+                `;
+            } else if (type === 'review') {
+                content = `
+                    <div class="bg-slate-800 text-white p-2.5 rounded-xl border border-yellow-500/30 text-[11px] space-y-1">
+                        <div class="font-bold text-yellow-400 flex items-center justify-between">
+                            <span>قيم تجربتك معنا ⭐</span>
+                        </div>
+                        <p>نأمل أن يكون المنتج قد نال إعجابك! يهمنا رأيك جداً، اضغط هنا لتقييم التجربة.</p>
+                    </div>
+                `;
+            }
+
+            screen.innerHTML = content;
+            showToast('حدث سلة Salla', 'تم إرسال إشعار محاكاة للواتساب', 'fa-solid fa-bag-shopping text-sallaAccent');
+        }
+        // Default Salla Phone state
+        triggerSallaEvent('new_order');
+
+        // --- 5. Pricing Toggle Monthly / Yearly ---
+        const pricingToggle = document.getElementById('pricing-toggle');
+        const pricingCircle = document.getElementById('pricing-toggle-circle');
+        let isYearly = false;
+
+        pricingToggle.addEventListener('click', () => {
+            isYearly = !isYearly;
+            if (isYearly) {
+                pricingCircle.classList.add('translate-x-6');
+                pricingCircle.classList.remove('translate-x-0');
+            } else {
+                pricingCircle.classList.remove('translate-x-6');
+                pricingCircle.classList.add('translate-x-0');
+            }
+
+            document.querySelectorAll('.price-value').forEach(el => {
+                const val = isYearly ? el.getAttribute('data-yearly') : el.getAttribute('data-monthly');
+                el.innerText = val;
+            });
+        });
+
+        // --- 6. FAQ Accordion Handler ---
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.fa-chevron-down');
+                
+                const isOpen = !answer.classList.contains('hidden');
+                
+                // Close all
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.add('hidden'));
+                document.querySelectorAll('.faq-item .fa-chevron-down').forEach(i => i.classList.remove('rotate-180'));
+
+                if (!isOpen) {
+                    answer.classList.remove('hidden');
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // --- 7. Toast Notification Utility ---
+        function showToast(title, desc, iconClass = 'fa-solid fa-bell text-brand-400') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel border border-brand-500/40 p-3.5 rounded-2xl shadow-2xl flex items-center gap-3 toast-animate bg-[#0D1424] text-right';
+            
+            toast.innerHTML = `
+                <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-lg">
+                    <i class="${iconClass}"></i>
+                </div>
+                <div>
+                    <h5 class="text-xs font-bold text-white">${title}</h5>
+                    <p class="text-[11px] text-slate-300">${desc}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>

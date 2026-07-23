@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شات هَب | تسجيل الدخول وإنشاء حساب جديد - ChatHub Auth</title>
+    <meta name="description" content="قم بتسجيل الدخول أو إنشاء حساب جديد على منصة شات هَب للتحكم في كافة محادثاتك وأتمتة متجرك بذكاء.">
+    
+    <!-- Google Fonts: Cairo & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Pro/Free Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        emerald: {
+                            500: '#10b981',
+                            600: '#059669',
+                        },
+                        salla: '#004956',
+                        sallaAccent: '#00DA90',
+                        darkBg: '#080C14',
+                        darkCard: '#111827',
+                        darkBorder: '#1F2937'
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS for Ambient Glows & Glass Polish -->
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #080C14;
+            color: #F3F4F6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Animated Grid Overlay */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Input Glow Focus Effect */
+        .auth-input {
+            background: rgba(11, 16, 29, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .auth-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        /* Custom Toast Notification Animation */
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast-animate {
+            animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Smooth Tab Switch Animations */
+        .form-switch-transition {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080C14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2937;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-[#080C14] text-slate-100 antialiased min-h-screen flex flex-col justify-between relative bg-grid-pattern selection:bg-brand-500 selection:text-white">
+
+    <!-- Ambient Glowing Orbs -->
+    <div class="fixed top-1/4 -right-20 w-[450px] h-[450px] bg-brand-600/15 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed bottom-10 -left-20 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[130px] pointer-events-none"></div>
+
+    <!-- Header Navigation -->
+    <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between relative z-20">
+        <!-- Brand Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                <i class="fa-solid fa-comments text-white text-xl"></i>
+            </div>
+            <span class="text-2xl font-black tracking-tight text-white">Chat<span class="text-brand-500">Hub</span></span>
+        </a>
+
+        <!-- Back to Home Button -->
+        <a href="index.html" class="glass-panel hover:bg-white/10 text-slate-300 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all border border-white/10 flex items-center gap-2">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>العودة للرئيسية</span>
+        </a>
+    </header>
+
+    <!-- Main Auth Card Container -->
+    <main class="flex-grow flex items-center justify-center px-4 py-8 relative z-10">
+        <div class="w-full max-w-md">
+            
+            <!-- Auth Glassmorphism Card -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl relative overflow-hidden">
+                
+                <!-- Decorative Top Gradient Line -->
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-500 via-emerald-400 to-brand-600"></div>
+
+                <!-- Card Header Text -->
+                <div class="text-center mb-8">
+                    <h1 id="auth-title" class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2">
+                        مرحباً بك مجدداً 👋
+                    </h1>
+                    <p id="auth-subtitle" class="text-xs sm:text-sm text-slate-400">
+                        قم بتسجيل الدخول للوصول إلى لوحة تحكم محادثاتك وأتمتة متجرك
+                    </p>
+                </div>
+
+                <!-- Interactive Switch Tabs (Segmented Control) -->
+                <div class="bg-[#0B101D] p-1.5 rounded-2xl border border-slate-800 flex items-center mb-8 relative">
+                    <button id="tab-login" onclick="switchAuthTab('login')" class="w-1/2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all relative z-10 text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-500/20">
+                        تسجيل الدخول
+                    </button>
+                    <button id="tab-register" onclick="switchAuthTab('register')" class="w-1/2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all relative z-10 text-slate-400 hover:text-slate-200">
+                        حساب جديد (تجربة مجانية)
+                    </button>
+                </div>
+
+                <!-- Quick Social Authentication Buttons -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <button onclick="handleSocialAuth('Salla')" class="py-2.5 px-3 rounded-xl bg-[#002B33]/60 hover:bg-[#002B33] border border-sallaAccent/30 text-sallaAccent text-xs font-bold transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>دخول عبر سلة</span>
+                    </button>
+                    <button onclick="handleSocialAuth('Google')" class="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-google text-red-400"></i>
+                        <span>عبر Google</span>
+                    </button>
+                </div>
+
+                <!-- Divider -->
+                <div class="flex items-center my-6">
+                    <div class="flex-grow border-t border-slate-800"></div>
+                    <span class="px-3 text-[11px] text-slate-500 font-medium">أو عبر البريد الإلكتروني</span>
+                    <div class="flex-grow border-t border-slate-800"></div>
+                </div>
+
+                <!-- AUTH FORMS WRAPPER -->
+                <div class="relative min-h-[300px]">
+                    
+                    <!-- 1. LOGIN FORM -->
+                    <form id="login-form" onsubmit="handleAuthSubmit(event, 'login')" class="space-y-4 form-switch-transition block">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5" for="login-email">البريد الإلكتروني</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                                <input type="email" id="login-email" required placeholder="name@company.com" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs auth-input">
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label class="block text-xs font-bold text-slate-300" for="login-password">كلمة المرور</label>
+                                <a href="forget-password.html" onclick="showToast('إعادة ضبط كلمة المرور', 'تم إرسال رابط التعيين لبريدك إذا كان مسجلاً', 'fa-solid fa-key text-amber-400'); return false;" class="text-[11px] text-brand-400 hover:underline font-semibold">نسيت كلمة المرور؟</a>
+                            </div>
+                            <div class="relative">
+                                <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                                <input type="password" id="login-password" required placeholder="••••••••" class="w-full pr-10 pl-10 py-3 rounded-xl text-xs auth-input">
+                                <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 pt-1">
+                            <input type="checkbox" id="remember-me" class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-brand-600 focus:ring-brand-500 focus:ring-offset-0 cursor-pointer">
+                            <label for="remember-me" class="text-xs text-slate-400 cursor-pointer select-none">تذكر تسجيل دخولي على هذا الجهاز</label>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 px-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-brand-500/25 transition-all flex items-center justify-center gap-2 active:scale-95">
+                            <span>تسجيل الدخول للحساب</span>
+                            <i class="fa-solid fa-arrow-left text-xs"></i>
+                        </button>
+                    </form>
+
+                    <!-- 2. REGISTER FORM -->
+                    <form id="register-form" onsubmit="handleAuthSubmit(event, 'register')" class="space-y-4 form-switch-transition hidden">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5" for="reg-fullname">الاسم الكامل</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-user absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                                <input type="text" id="reg-fullname" required placeholder="عبدالله العتيبي" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs auth-input">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5" for="reg-store">اسم المتجر أو الشركة</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-store absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                                <input type="text" id="reg-store" required placeholder="متجر الأناقة أو شركتك" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs auth-input">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5" for="reg-email">البريد الإلكتروني للعمل</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                                <input type="email" id="reg-email" required placeholder="owner@store.sa" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs auth-input">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5" for="reg-password">كلمة المرور</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                                <input type="password" id="reg-password" minlength="8" required placeholder="8 أحرف أو أكثر" class="w-full pr-10 pl-10 py-3 rounded-xl text-xs auth-input">
+                                <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-brand-950/40 border border-brand-500/20 rounded-xl text-[11px] text-slate-400 flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5"></i>
+                            <span>تشمل تجربة مجانية كاملة المميزات لمدة 14 يوماً بدون الحاجة لبطاقة ائتمان.</span>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all flex items-center justify-center gap-2 active:scale-95">
+                            <span>إنشاء الحساب وبدء التجربة المجانية</span>
+                            <i class="fa-solid fa-rocket text-xs"></i>
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- Footer Meta Info inside Card Wrapper -->
+            <div class="text-center text-[11px] text-slate-500 mt-6">
+                بالمتابعة أنت توافق على <a href="#" class="text-slate-400 hover:underline">شروط الخدمة</a> و <a href="#" class="text-slate-400 hover:underline">سياسة الخصوصية</a> لمنصة ChatHub.
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Page Footer -->
+    <footer class="w-full max-w-7xl mx-auto px-4 py-4 text-center text-xs text-slate-500 relative z-20">
+        جميع الحقوق محفوظة © 2026 ChatHub SaaS Inc.
+    </footer>
+
+    <!-- LIVE TOAST CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-3 max-w-sm"></div>
+
+    <!-- JAVASCRIPT FOR INTERACTIVE FORM SWITCHING AND DEMO LOGIC -->
+    <script>
+        // --- 1. Switch Auth Tabs (Login vs Register) ---
+        function switchAuthTab(type) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+
+            const activeClass = 'text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-500/20';
+            const inactiveClass = 'text-slate-400 hover:text-slate-200 bg-transparent shadow-none';
+
+            if (type === 'login') {
+                // Show Login Form
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+
+                // Update Tab Styles
+                tabLogin.className = `w-1/2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all relative z-10 ${activeClass}`;
+                tabRegister.className = `w-1/2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all relative z-10 ${inactiveClass}`;
+
+                // Update Header Text
+                title.innerText = 'مرحباً بك مجدداً 👋';
+                subtitle.innerText = 'قم بتسجيل الدخول للوصول إلى لوحة تحكم محادثاتك وأتمتة متجرك';
+            } else {
+                // Show Register Form
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+
+                // Update Tab Styles
+                tabRegister.className = `w-1/2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all relative z-10 ${activeClass}`;
+                tabLogin.className = `w-1/2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all relative z-10 ${inactiveClass}`;
+
+                // Update Header Text
+                title.innerText = 'ابدأ تجاربك المجانية 🚀';
+                subtitle.innerText = 'أنشئ حسابك الآن واستمتع بجميع المميزات مجاناً لمدة 14 يوم';
+            }
+        }
+
+        // --- 2. Toggle Password Input Visibility ---
+        function togglePasswordVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // --- 3. Handle Form Submissions (Demo Handler) ---
+        function handleAuthSubmit(event, type) {
+            event.preventDefault();
+
+            if (type === 'login') {
+                const email = document.getElementById('login-email').value;
+                showToast('تم تسجيل الدخول بنجاح!', `أهلاً بك (${email})، جاري تحويلك للوحة التحكم...`, 'fa-solid fa-circle-check text-emerald-400');
+            } else {
+                const name = document.getElementById('reg-fullname').value;
+                showToast('تم إنشاء الحساب بنجاح! 🎉', `مرحباً أ. ${name}، تم تفعيل فترة الـ 14 يوم المجانية.`, 'fa-solid fa-rocket text-sallaAccent');
+            }
+        }
+
+        // --- 4. Handle Social Auth Clicks ---
+        function handleSocialAuth(provider) {
+            showToast(`التسجيل عبر ${provider}`, `جاري التوجيه للتحقق عبر منصة ${provider}...`, 'fa-solid fa-spinner animate-spin text-brand-400');
+        }
+
+        // --- 5. Toast Notification System ---
+        function showToast(title, desc, iconClass = 'fa-solid fa-bell text-brand-400') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel border border-brand-500/40 p-3.5 rounded-2xl shadow-2xl flex items-center gap-3 toast-animate bg-[#0D1424] text-right';
+            
+            toast.innerHTML = `
+                <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-lg shrink-0">
+                    <i class="${iconClass}"></i>
+                </div>
+                <div>
+                    <h5 class="text-xs font-bold text-white">${title}</h5>
+                    <p class="text-[11px] text-slate-300 leading-tight mt-0.5">${desc}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
